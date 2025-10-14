@@ -150,7 +150,7 @@ from transformers import pipeline
 from PIL import Image, ImageDraw, ImageFont
 
 # Initialize Google Gemini client
-genai.configure(api_key="YOUR_API_KEY")  # Replace with your actual API key
+genai.configure(api_key="")  # Replace with your actual API key
 
 # Load sentiment analysis model
 sentiment_pipeline = pipeline("sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment")
