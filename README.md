@@ -1,6 +1,6 @@
 ## 🧠 Instameme – Sentiment-Based Meme Generator
 
-**Instameme** is a Streamlit-based web application that automatically generates memes from user-provided text. It combines sentiment analysis and AI-powered captioning to create personalized and humorous memes based on how your input *feels*.
+**Instameme** is a web application that automatically generates memes from user-provided text. It combines sentiment analysis and AI-powered captioning to create personalized and humorous memes based on how your input *feels*.
 
 ### 🔧 Features
 - 🔍 **Sentiment Detection** using a pre-trained RoBERTa model (`cardiffnlp/twitter-roberta-base-sentiment`) to classify input as *happy*, *sad*, or *sarcastic*
