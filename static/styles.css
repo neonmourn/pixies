@@ -1,0 +1,126 @@
+/* static/styles.css */
+:root{
+  --bg-start:#fff7ad;
+  --bg-end:#ffa9f9;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --accent:#ffce54;
+  --primary-start:#ff9a9e;
+  --primary-end:#fad0c4;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  background:linear-gradient(135deg,var(--bg-start),var(--bg-end));
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+  max-width:980px;
+  margin:28px auto;
+  padding:12px;
+}
+
+.header{text-align:center;padding:20px 10px}
+.header h1{font-size:34px;margin:0 0 6px}
+.header p{margin:0;color:var(--muted)}
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  border:1px solid rgba(0,0,0,0.06);
+  margin-top:12px;
+}
+
+.card h2{margin:0 0 12px;font-size:18px}
+textarea{
+  width:100%;
+  min-height:110px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  font-size:15px;
+  resize:vertical;
+}
+
+.muted{color:var(--muted); margin-top:12px}
+
+.examples-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+
+.example-btn{
+  padding:10px;
+  border-radius:10px;
+  border:2px solid var(--accent);
+  background:#fffef3;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.primary{
+  background: linear-gradient(90deg,var(--primary-start),var(--primary-end));
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.ghost{
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.06);
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.meme-preview{
+  margin-top:18px;
+  background:var(--card);
+  border-radius:12px;
+  padding:16px;
+  text-align:center;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  border:1px solid rgba(0,0,0,0.06);
+}
+
+.meta-row{display:flex;gap:12px;justify-content:center;align-items:center}
+.badge{background:#fff;border-radius:999px;padding:6px 12px;font-weight:700}
+
+/* sentiment colors (small) */
+.badge:empty{display:none}
+.confidence{color:var(--muted)}
+
+.caption{font-weight:600;margin-top:8px}
+
+.download{
+  background:#fff6c4;
+  border:1px solid var(--accent);
+  padding:8px 12px;
+  border-radius:10px;
+  text-decoration:none;
+  color: #222;
+  font-weight:700;
+}
+
+.secondary{
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.06);
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.footer{ text-align:center; margin-top:22px; color:var(--muted) }

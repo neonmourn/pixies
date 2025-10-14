@@ -1,0 +1,131 @@
+<!-- static/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>InstaMeme Generator</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>😂 InstaMeme Generator</h1>
+      <p>Type your idea — AI detects sentiment, adds a caption, and turns it into a meme 🎯</p>
+    </header>
+
+    <section class="card">
+      <h2>🧠 Describe your meme idea</h2>
+      <textarea id="prompt" placeholder="e.g., My WiFi dies exactly when I click submit."></textarea>
+
+      <p class="muted"><strong>Or try one of these examples:</strong></p>
+      <div id="examples" class="examples-grid"></div>
+
+      <div style="margin-top:16px; display:flex; gap:12px;">
+        <button id="generateBtn" class="primary">✨ Generate Meme</button>
+        <button id="clearBtn" class="ghost">Clear</button>
+      </div>
+    </section>
+
+    <section id="result" class="meme-preview" style="display:none">
+      <div id="meta" class="meta-row">
+        <span id="badge" class="badge"></span>
+        <span id="confidence" class="confidence"></span>
+      </div>
+      <div style="text-align:center; margin-top:10px;">
+        <img id="memeImg" src="" alt="Generated meme" style="max-width:100%; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.12)"/>
+      </div>
+      <p id="captionText" class="caption" style="margin-top:10px; text-align:center; font-weight:600;"></p>
+
+      <div style="margin-top:12px; display:flex; gap:10px; justify-content:center;">
+        <a id="downloadLink" class="download" href="#" download>⬇️ Download Meme</a>
+        <button id="regenerateBtn" class="secondary">Regenerate</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Made with ❤️ for Hackathons — Powered by AI & Humor 😎
+    </footer>
+  </main>
+
+<script>
+const examples = [
+  "When the code works on my machine",
+  "My WiFi dies during submission",
+  "Group project: one person does everything",
+  "When Monday hits too hard",
+  "New iPhone has no buttons",
+  "When you fix one bug and create five new ones",
+];
+
+const exContainer = document.getElementById('examples');
+examples.forEach((ex) => {
+  const btn = document.createElement('button');
+  btn.className = 'example-btn';
+  btn.innerText = ex;
+  btn.onclick = () => {
+    document.getElementById('prompt').value = ex;
+  };
+  exContainer.appendChild(btn);
+});
+
+const generateBtn = document.getElementById('generateBtn');
+const clearBtn = document.getElementById('clearBtn');
+const regenerateBtn = document.getElementById('regenerateBtn');
+const resultSection = document.getElementById('result');
+const memeImg = document.getElementById('memeImg');
+const badge = document.getElementById('badge');
+const confidenceEl = document.getElementById('confidence');
+const captionText = document.getElementById('captionText');
+const downloadLink = document.getElementById('downloadLink');
+
+async function callGenerate() {
+  const prompt = document.getElementById('prompt').value.trim();
+  if (!prompt) { alert('Please enter an idea first!'); return; }
+
+  generateBtn.disabled = true;
+  generateBtn.innerText = 'Generating...';
+
+  try {
+    const resp = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ prompt })
+    });
+    const data = await resp.json();
+    if (data.error) {
+      alert(data.error);
+      generateBtn.disabled = false;
+      generateBtn.innerText = '✨ Generate Meme';
+      return;
+    }
+
+    const imgSrc = "data:image/jpeg;base64," + data.image_b64;
+    memeImg.src = imgSrc;
+    captionText.innerText = data.caption;
+    badge.innerText = data.sentiment ? data.sentiment.toUpperCase() : '';
+    confidenceEl.innerText = data.confidence ? `Confidence: ${data.confidence}%` : '';
+    downloadLink.href = imgSrc;
+    downloadLink.download = data.file_name || 'meme.jpg';
+
+    resultSection.style.display = 'block';
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong — check server logs.');
+  } finally {
+    generateBtn.disabled = false;
+    generateBtn.innerText = '✨ Generate Meme';
+  }
+}
+
+generateBtn.addEventListener('click', callGenerate);
+regenerateBtn && (regenerateBtn.addEventListener('click', callGenerate));
+clearBtn.addEventListener('click', () => {
+  document.getElementById('prompt').value = '';
+  resultSection.style.display = 'none';
+});
+</script>
+</body>
+</html>
